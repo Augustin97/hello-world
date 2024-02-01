@@ -1,7 +1,5 @@
-# hello-world
-Just another repository
-
+# sql-srs
 Hi
 
-Augustin here, I like python and Machine Learning.
-Curently trying to learn Golang.
+Augustin here, this is a streamlit app demo to practice sql.
+And maybe more to come.
