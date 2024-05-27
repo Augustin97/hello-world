@@ -1,5 +1,4 @@
 import io
-
 import duckdb
 import pandas as pd
 import streamlit as st
@@ -7,9 +6,6 @@ import streamlit as st
 st.write("""
 # SQL SRS
 Spaced Repitition""")
-
-data = {"a": [1, 2, 3], "b": [4, 5, 6]}
-df = pd.DataFrame(data)
 
 csv = '''
 beverage, price
@@ -40,6 +36,19 @@ query = st.text_area(label='votre code SQL ici', key="user_input")
 if query:
     result = duckdb.sql(query).df()
     st.dataframe(result)
+
+    if len(result.columns) != len(solution.columns):
+        st.write("Some columns are missing")
+
+    n_line_missing = abs(result.shape[0] - solution.shape[0])
+    if n_line_missing != 0:
+        st.write(f'result has {n_line_missing} lines difference with the solution_df')
+
+    try:
+        result = result[solution.columns]
+        st.dataframe(result.compare(solution))
+    except KeyError as e:
+        st.write("Some columns are missing")
 
 with st.sidebar:
     option = st.selectbox(
